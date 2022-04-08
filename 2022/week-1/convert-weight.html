@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Convert Weight Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style type="text/css">
+    body {
+      margin: 0 auto;
+      max-width: 40em;
+      width: 88%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Convert Weight Library</h1>
+
+  <p>All of the magic here happens in the console.</p>
+
+
+  <script>
+			/**
+       * Converts metric weight units
+       */
+			const convert = (function () {
+
+				// Default unit of weight
+				let defaultUnits = 'pound';
+        const weightRatios = {
+          'grams': {
+            'ratio': 1,
+            'abbr': 'g'
+          },
+          'milligrams': {
+            'ratio': 0.001,
+            'abbr': 'mg'
+          },
+          'kilograms': {
+            'ratio': 1000,
+            'abbr': 'kg'
+          }
+        };
+
+				/**
+				 * Convert between arbitary gram units, using the full unit names or their abbreviations
+				 * @param {Number} weight The starting weight
+				 * @param {string} fromUnit The starting unit, using the full unit name or its abbreviation
+				 * @param {string} weigtoUnitht The target unit, using the full unit name or its abbreviation
+				 */
+        function units ( weight, fromUnit, toUnit ) {
+          const fromObj = (weightRatios[fromUnit]) ? weightRatios[fromUnit] : weightRatios[getUnitByAbbr(fromUnit)[0]];
+          const toObj = (weightRatios[toUnit]) ? weightRatios[toUnit] : weightRatios[getUnitByAbbr(toUnit)[0]];
+          return `${(+weight) * (fromObj?.ratio / toObj?.ratio)} ${toObj?.abbr}`;
+        }
+
+        function getUnitByAbbr (abbr) {
+          return Object.keys(weightRatios).filter((unit) => {
+            return weightRatios[unit].abbr === abbr;
+          });
+        }
+
+				/**
+				 * Convert grams to milligrams
+				 * @param {Number} weight The starting weight
+				 */
+        function gramsToMg ( weight ) {
+          return (+weight) * 1000;
+        }
+
+        /**
+				 * Convert grams to kilograms
+				 * @param {Number} weight The starting weight
+				 */
+        function gramsToKg ( weight ) {
+          return (+weight) / 1000;
+        }
+
+				/**
+				 * Convert milligrams to grams
+				 * @param {Number} weight The starting weight
+				 */
+        function mgToGrams ( weight ) {
+          return (+weight) / 1000;
+        }
+
+				/**
+				 * Convert kilograms to grams
+				 * @param {Number} weight The starting weight
+				 */
+         function kgToGrams ( weight ) {
+          return (+weight) * 1000;
+        }
+        
+				/**
+				 * Convert milligrams to kilograms
+				 * @param {Number} weight The starting weight
+				 */
+        function mgToKg ( weight ) {
+          return (+weight) / 1000000;
+        }
+
+				/**
+				 * Convert kilograms to milligrams
+				 * @param {Number} weight The starting weight
+				 */
+         function kgToMg ( weight ) {
+          return (+weight) * 1000000;
+        }
+
+				// Export public methods
+				return { units, gramsToMg, gramsToKg, mgToGrams, mgToKg, kgToGrams, kgToMg };
+
+			})();
+
+
+
+      // returns 42000
+			console.log('gramsToMg(42)', convert.gramsToMg(42));
+      console.log('correct:', '42000');
+
+      // returns 0.042
+			console.log('gramsToKg(42)', convert.gramsToKg(42));
+      console.log('correct:', '0.042');
+
+      // returns 0.000042
+			console.log('mgToKg(42)', convert.mgToKg(42));
+      console.log('correct:', '0.000042');
+
+
+      // returns 42000
+			console.log('units(42, "grams", "milligrams")', convert.units(42, 'grams', 'milligrams'));
+      console.log('correct:', '42000');
+
+      // returns 0.042
+			console.log('units(42, "grams", "kilograms")', convert.units(42, 'grams', 'kilograms'));
+      console.log('correct:', '0.042');
+
+      // returns 0.000042
+			console.log('units(42, "milligrams", "kilograms")', convert.units(42, 'milligrams', 'kilograms'));
+      console.log('correct:', '0.000042');
+
+      // returns 42000000
+			console.log('units(42, "kg", "mg")', convert.units(42, 'kg', 'mg'));
+      console.log('correct:', '42000000');
+
+      // returns 0.042
+			console.log('units(42, "mg", "g")', convert.units(42, 'mg', 'g'));
+      console.log('correct:', '0.042');
+
+  </script>
+</body>
+</html>
