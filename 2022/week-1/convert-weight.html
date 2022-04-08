@@ -27,7 +27,6 @@
 			const convert = (function () {
 
 				// Default unit of weight
-				let defaultUnits = 'pound';
         const weightRatios = {
           'grams': {
             'ratio': 1,
@@ -55,6 +54,10 @@
           return `${(+weight) * (fromObj?.ratio / toObj?.ratio)} ${toObj?.abbr}`;
         }
 
+        /**
+         * Returns the object matching the abbreviation in the parameter
+				 * @param {string} abbr The abbreviation of the unit
+         */
         function getUnitByAbbr (abbr) {
           return Object.keys(weightRatios).filter((unit) => {
             return weightRatios[unit].abbr === abbr;

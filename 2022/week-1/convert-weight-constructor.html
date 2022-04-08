@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Convert Weight Library - Constructor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style type="text/css">
+    body {
+      margin: 0 auto;
+      max-width: 40em;
+      width: 88%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Convert Weight Library - Constructor</h1>
+
+  <p>All of the magic here happens in the console.</p>
+
+
+  <script>
+    /**
+     * Converts metric weight units
+     */
+    const Weight = (function () {
+
+      /**
+       * The Constructor object
+       * @param {Number} weight The starting weight
+       */
+      function Constructor (weight) {
+        this.weight = +weight;
+        this.multiplier = 1000;
+      }
+
+      /**
+       * Express weight in grams
+       */
+      Constructor.prototype.inGrams = function () {
+        return this.weight / this.multiplier;
+      }
+
+      /**
+       * Express weight in kilograms
+       */
+      Constructor.prototype.inKg = function () {
+        return this.weight / this.multiplier**2;
+      }
+
+      /**
+       * Express weight in milligrams
+       */
+      Constructor.prototype.inMg = function () {
+        return this.weight;
+      }
+
+
+      // Export the constructor object
+      return Constructor;
+    })();
+
+
+    const hummingbird = new Weight(4000);
+
+    // returns 4
+    const grams = hummingbird.inGrams();
+    console.log('grams (expect `4`):', grams);
+    
+    // returns 0.004
+    const kg = hummingbird.inKg();
+    console.log('kilograms (expect `0.004`):', kg);
+    
+    // returns 4000
+    const mg = hummingbird.inMg();
+    console.log('milligrams (expect `4000`):', mg);
+  </script>
+</body>
+</html>
