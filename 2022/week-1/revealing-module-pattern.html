@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Revealing Module Pattern</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+
+	<body>
+
+
+		<script>
+			let weight = (function () {
+
+				// Default unit of weight
+				let defaultUnits = 'pound';
+
+				/**
+				 * Add an amount to a weight
+				 * @param {Number} weight The starting weight
+				 * @param {Number} amount The amount to add
+				 */
+				function add (weight, amount) {
+					return weight + amount;
+				}
+
+				/**
+				 * Subtract an amount from a weight
+				 * @param {Number} weight The starting weight
+				 * @param {Number} amount The amount to subtract
+				 */
+				function subtract (weight, amount) {
+					return weight - amount;
+				}
+
+				/**
+				 * Format a weight to a string
+				 * @param  {Number} weight The weight to format
+				 * @param  {String} units  The weight units to use
+				 * @return {String}        The formatted weight
+				 */
+				function format (weight, units) {
+					return weight.toLocaleString(undefined, {
+						style: 'unit',
+						unit: units ? units : defaultUnits
+					});
+				}
+
+				// Export public methods
+				return {add, subtract, format};
+
+			})();
+
+			let current = 100;
+			let gotStronger = weight.add(current, 5);
+			let formatted = weight.format(gotStronger);
+
+			console.log(gotStronger);
+			console.log(formatted);
+			console.log(weight.defaultUnits);
+		</script>
+	</body>
+</html>
