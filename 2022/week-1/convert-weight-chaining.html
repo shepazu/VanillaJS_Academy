@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>Convert Weight Library - Chaining</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style type="text/css">
+    body {
+      margin: 0 auto;
+      max-width: 40em;
+      width: 88%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Convert Weight Library - Chaining</h1>
+
+  <p>All of the magic here happens in the console.</p>
+
+
+  <script>
+    let Weight = (function () {
+
+      /**
+       * The Constructor object
+       * @param {Number} weight The starting weight in milligrams
+       */
+      function Constructor(weight) {
+        this.weight = +weight;
+        this.multiplier = 1000;
+      }
+
+      /**
+       * Add weight in milligrams
+       * @return {Number} The weight in milligrams
+       */
+      Constructor.prototype.addMg = function ( weight ) {
+        this.weight += +weight;
+        return this;
+      };
+
+      /**
+       * Add weight in grams
+       * @return {Number} The weight in grams
+       */
+      Constructor.prototype.addGrams = function ( weight ) {
+        this.weight += (+weight * this.multiplier);
+        return this;
+      };
+
+      /**
+       * Add weight in kilograms
+       * @return {Number} The weight in kilograms
+       */
+      Constructor.prototype.addKg = function ( weight ) {
+        this.weight += (+weight * this.multiplier**2);
+        return this;
+      };
+
+      /**
+       * Get weight in milligrams
+       * @return {Number} The weight in milligrams
+       */
+      Constructor.prototype.inMg = function () {
+        return this.weight;
+      };
+
+      /**
+       * Get weight in grams
+       * @return {Number} The weight in grams
+       */
+      Constructor.prototype.inGrams = function () {
+        return this.weight / this.multiplier;
+      };
+
+      /**
+       * Get weight in kilograms
+       * @return {Number} The weight in kilograms
+       */
+      Constructor.prototype.inKg = function () {
+        return this.weight / this.multiplier**2;
+      };
+
+      return Constructor;
+
+    })();
+
+    // Create a new instance
+    const hummingbird = new Weight(4000);
+
+    // Add some weight and get the new value in grams
+    const afterEating = hummingbird.addMg(150).addGrams(1).inGrams();
+    console.log('grams (expect `5.15`):', afterEating);
+
+  </script>
+</body>
+
+</html>
